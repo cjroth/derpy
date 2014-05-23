@@ -56,5 +56,5 @@ fs.writeFileSync(path.join(__dirname, 'public/javascripts/app.min.js'), clientSi
 app.use(errors());
 
 var server = app.listen(app.get('port'), function() {
-  console.log('server listening on port %d', server.address().port);
+  console.log('server listening on port %d configured for %s', server.address().port, app.get('env'));
 });

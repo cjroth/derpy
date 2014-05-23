@@ -22,12 +22,12 @@ html(lang='en')
     if (env === 'development')
       script(src='/vendor/jquery/jquery-2.1.1.js')
       script(src='/vendor/bootstrap/js/bootstrap.js')
-      script(src='/javascripts/app.min.js')
+      each javascript in javascripts
+        script(src=javascript)
 
     else
       script(src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
       script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
-      each javascript in javascripts
-        script(src=javascript)
+      script(src='/javascripts/app.min.js')
 
     block javascripts
