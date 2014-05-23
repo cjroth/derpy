@@ -11,6 +11,7 @@ var moment = require('moment');
 var pg = require('pg');
 var serveStatic = require('serve-static');
 var s = require('string');
+var sass = require('node-sass');
 var UglifyJS = require('uglify-js');
 var validator = require('validator');
 
@@ -36,6 +37,12 @@ app.locals.moment = moment;
 app.locals.s = s;
 
 // app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(sass.middleware({
+  src: path.join(__dirname, 'public/stylesheets/src'),
+  dest: path.join(__dirname, 'public/stylesheets'),
+  prefix: '/stylesheets',
+  outputStyle: app.get('env') === 'development' ? 'nested' : 'compressed',
+}));
 app.use(serveStatic(path.join(__dirname, 'public')));
 app.use(cookieParser(config.secret));
 app.use(bodyParser());
