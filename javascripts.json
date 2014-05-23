@@ -1,0 +1,6 @@
+[
+  "vendor/jquery/jquery.flashback.js",
+  "vendor/jquery/jquery.derpy-expose.js",
+  "vendor/jquery/jquery.derpy-render.js",
+  "javascripts/global.js"
+]

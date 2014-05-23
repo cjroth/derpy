@@ -19,11 +19,15 @@ html(lang='en')
     #misc
       block misc
 
-    script(src='/vendor/jquery/jquery-2.1.1' + ((env === 'development') ? '.min' : '') + '.js')
-    script(src='/vendor/bootstrap/js/bootstrap' + ((env === 'development') ? '.min' : '') + '.js')
-    script(src='/vendor/jquery/jquery.flashback.js')
-    script(src='/vendor/jquery/jquery.derpy-expose.js')
-    script(src='/vendor/jquery/jquery.derpy-render.js')
-    script(src='/javascripts/global.js')
+    if (env === 'development')
+      script(src='/vendor/jquery/jquery-2.1.1.js')
+      script(src='/vendor/bootstrap/js/bootstrap.js')
+      script(src='/javascripts/app.min.js')
+
+    else
+      script(src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
+      script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
+      each javascript in javascripts
+        script(src=javascript)
 
     block javascripts

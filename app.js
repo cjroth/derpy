@@ -11,6 +11,7 @@ var moment = require('moment');
 var pg = require('pg');
 var serveStatic = require('serve-static');
 var s = require('string');
+var UglifyJS = require('uglify-js');
 var validator = require('validator');
 
 var partial = require('./lib/middleware/partial');
@@ -18,14 +19,17 @@ var title = require('./lib/middleware/title');
 var errors = require('./lib/middleware/errors');
 
 var config = require('./config.json');
+var javascripts = require('./javascripts.json');
 
 var app = express();
 
 app.set('title', 'Imaginary, LLC');
 app.set('view engine', 'jade');
+app.set('port',  config.port || process.env.PORT || 3000);
 
 app.locals.basedir = path.join(__dirname, 'views');
 app.locals.pretty = app.get('env') === 'development' ? true : false;
+app.locals.javascripts = javascripts;
 app.locals.copyright = 'Imaginary, LLC';
 app.locals.lodash = lodash;
 app.locals.moment = moment;
@@ -44,6 +48,13 @@ app.get('/', function(req, res, next) {
     .render('index');
 });
 
+var clientSideJS = UglifyJS.minify(javascripts.map(function(javascript) {
+  return path.join(__dirname, 'public', javascript);
+}));
+fs.writeFileSync(path.join(__dirname, 'public/javascripts/app.min.js'), clientSideJS.code);
+
 app.use(errors());
 
-app.listen(9999);
+var server = app.listen(app.get('port'), function() {
+  console.log('server listening on port %d', server.address().port);
+});
