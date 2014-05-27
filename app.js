@@ -55,12 +55,20 @@ app.get('/', function(req, res, next) {
     .render('index');
 });
 
+app.get('/error', function(req, res, next) {
+  try {
+    throw new Error('Test Error');
+  } catch(err) {
+    next(err);
+  }
+});
+
 var clientSideJS = UglifyJS.minify(javascripts.map(function(javascript) {
   return path.join(__dirname, 'public', javascript);
 }));
 fs.writeFileSync(path.join(__dirname, 'public/javascripts/app.min.js'), clientSideJS.code);
 
-app.use(errors());
+app.use(errors.middleware());
 
 var server = app.listen(app.get('port'), function() {
   console.log('server listening on port %d configured for %s', server.address().port, app.get('env'));

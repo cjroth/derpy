@@ -1,4 +1,2 @@
-Imaginary, LLC Starter App
-==========================
-
-A boilerplate express app for starting projects quickly.
+Derpy: A Boilerplate App for Node.js + Express
+==============================================
